@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <dirent.h>
+#include <sys/stat.h>
 
 /**
  * Prints out a directory listing for the directory the user specifies on the command line,
@@ -30,12 +31,18 @@ int main(int argc, char **argv)
     exit(1);
   }
 
+  // Repeatly read and print entries
   while ((dp = readdir(dir)) != NULL)
   {
-    printf("%s", dp->d_name);
-  }
+    struct stat get_size;
 
-  // Repeatly read and print entries
+    char path[256];
+    // int snprintf(char *str, size_t size, const char *format, ...);
+    snprintf(path, 256, "%s/%s", directory, dp->d_name);
+    stat(path, &get_size);
+
+    printf("%lli %s\n", get_size.st_size, dp->d_name);
+  }
 
   // Close directory
 
