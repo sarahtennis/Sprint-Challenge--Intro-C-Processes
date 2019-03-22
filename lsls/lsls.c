@@ -9,6 +9,10 @@
 int main(int argc, char **argv)
 {
   // Parse command line
+  char directory[100];
+
+  printf("Enter directory: ");
+  fgets(directory, 100, stdin);
 
   // Open directory
 
