@@ -9,12 +9,31 @@
 int main(int argc, char **argv)
 {
   // Parse command line
-  char directory[100];
+  char *directory;
 
-  printf("Enter directory: ");
-  fgets(directory, 100, stdin);
+  if (argc >= 2)
+  {
+    directory = argv[1];
+  }
+  else
+  {
+    directory = ".";
+  }
 
   // Open directory
+  DIR *dir = opendir(directory);
+  struct dirent *dp;
+
+  if (dir == NULL)
+  {
+    perror("Cannot open directory");
+    exit(1);
+  }
+
+  while ((dp = readdir(dir)) != NULL)
+  {
+    printf("%s", dp->d_name);
+  }
 
   // Repeatly read and print entries
 
