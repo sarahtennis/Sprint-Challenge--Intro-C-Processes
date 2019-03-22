@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <dirent.h>
 #include <sys/stat.h>
 
@@ -32,6 +33,8 @@ int main(int argc, char **argv)
   }
 
   // Repeatly read and print entries
+  int longest_size = 5;
+
   while ((dp = readdir(dir)) != NULL)
   {
     struct stat get_size;
@@ -41,10 +44,11 @@ int main(int argc, char **argv)
     snprintf(path, 256, "%s/%s", directory, dp->d_name);
     stat(path, &get_size);
 
-    printf("%lli %s\n", get_size.st_size, dp->d_name);
+    printf("%*lli %s\n", longest_size, get_size.st_size, dp->d_name);
   }
 
   // Close directory
+  closedir(dir);
 
   return 0;
 }
